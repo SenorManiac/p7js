@@ -30,7 +30,90 @@ class Node {
         this.tail = newNode;
       }
     }
-  
+
+    prepend(value) {
+        const newNode = new Node(value);
+        if (this.head === null) {
+          this.head = newNode;
+          this.tail = newNode;
+        } else {
+          this.head.prev = newNode;
+          newNode.next = this.head;
+          this.head = newNode;
+        }
+      }
+      
+    size() {
+      let current = this.head;
+      let count = 0;
+      while (current !== null) {
+        count++;
+        current = current.next;
+      }
+      return count;
+    }
+
+    head() {
+        return this.head;
+        }
+
+    tail() {
+        return this.tail;
+        }
+    
+    at(index) {
+        let current = this.head;
+        let count = 0;
+        while (current !== null) {
+          if (count === index) {
+            return current;
+          }
+          count++;
+          current = current.next;
+        }
+        return null;
+      }
+    
+    pop() {
+        if (this.head === null) {
+          return null;
+        }
+        if (this.head === this.tail) {
+          const node = this.head;
+          this.head = null;
+          this.tail = null;
+          return node;
+        }
+        const node = this.tail;
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+        return node;
+      }
+
+    contains(value) {
+        let current = this.head;
+        while (current !== null) {
+          if (current.value === value) {
+            return true;
+          }
+          current = current.next;
+        }
+        return false;
+      }
+    
+    find(value) {
+        let current = this.head;
+        let index = 0;
+        while (current !== null) {
+          if (current.value === value) {
+            return index;
+          }
+          index++;
+          current = current.next;
+        }
+        return -1;
+      }
+    
     toString() {
       let current = this.head;
       let result = '';
@@ -52,3 +135,6 @@ class Node {
   list.append("turtle");
   
   console.log(list.toString());
+  console.log(list.size());
+  console.log(list.at(3));
+  console.log(list.find("parrot"));
